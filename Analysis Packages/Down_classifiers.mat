@@ -1,0 +1,56 @@
+%% Linear classifier for pseudo-population
+iterations = 1000;
+disp('Classifier 14')
+[classifier.Choice.maccuracy(1,:),classifier.Choice.error(1,:)] = Classification_down(Prepped.data14,0,iterations,1);
+[classifier.Side1.maccuracy(1,:),classifier.Side1.error(1,:)] = Classification_down(Prepped.data14,0,iterations,2);
+[classifier.SideC.maccuracy(1,:),classifier.SideC.error(1,:)] = Classification_down(Prepped.data14,0,iterations,3);
+[classifier.EV1.maccuracy(1,:),classifier.EV1.error(1,:)] = Classification_down(Prepped.data14,0,iterations,4);
+[classifier.EV2.maccuracy(1,:),classifier.EV2.error(1,:)] = Classification_down(Prepped.data14,0,iterations,5);
+[classifier.EVdiff.maccuracy(1,:),classifier.EVdiff.error(1,:)] = Classification_down(Prepped.data14,0,iterations,6);
+[classifier.EVchoice.maccuracy(1,:),classifier.EVchoice.error(1,:)] = Classification_down(Prepped.data14,0,iterations,7);
+[classifier.PrevChoice.maccuracy(1,:),classifier.PrevChoice.error(1,:)] = Classification_down(Prepped.data14,0,iterations,8);
+[classifier.PrevChoiceSide.maccuracy(1,:),classifier.PrevChoiceSide.error(1,:)] = Classification_down(Prepped.data14,0,iterations,9);
+
+disp('Classifier 25')
+[classifier.Choice.maccuracy(2,:),classifier.Choice.error(2,:)] = Classification_down(Prepped.data25,1,iterations,1);
+[classifier.Side1.maccuracy(2,:),classifier.Side1.error(2,:)] = Classification_down(Prepped.data25,1,iterations,2);
+[classifier.SideC.maccuracy(2,:),classifier.SideC.error(2,:)] = Classification_down(Prepped.data25,1,iterations,3);
+[classifier.EV1.maccuracy(2,:),classifier.EV1.error(2,:)] = Classification_down(Prepped.data25,1,iterations,4);
+[classifier.EV2.maccuracy(2,:),classifier.EV2.error(2,:)] = Classification_down(Prepped.data25,1,iterations,5);
+[classifier.EVdiff.maccuracy(2,:),classifier.EVdiff.error(2,:)] = Classification_down(Prepped.data25,1,iterations,6);
+[classifier.EVchoice.maccuracy(2,:),classifier.EVchoice.error(2,:)] = Classification_down(Prepped.data25,1,iterations,7);
+[classifier.PrevChoice.maccuracy(2,:),classifier.PrevChoice.error(2,:)] = Classification_down(Prepped.data25,1,iterations,8);
+[classifier.PrevChoiceSide.maccuracy(2,:),classifier.PrevChoiceSide.error(2,:)] = Classification_down(Prepped.data25,1,iterations,9);
+
+disp('Classifier 32')
+[classifier.Choice.maccuracy(3,:),classifier.Choice.error(3,:)] = Classification_down(Prepped.data32,0,iterations,1);
+[classifier.Side1.maccuracy(3,:),classifier.Side1.error(3,:)] = Classification_down(Prepped.data32,0,iterations,2);
+[classifier.SideC.maccuracy(3,:),classifier.SideC.error(3,:)] = Classification_down(Prepped.data32,0,iterations,3);
+[classifier.EV1.maccuracy(3,:),classifier.EV1.error(3,:)] = Classification_down(Prepped.data32,0,iterations,4);
+[classifier.EV2.maccuracy(3,:),classifier.EV2.error(3,:)] = Classification_down(Prepped.data32,0,iterations,5);
+[classifier.EVdiff.maccuracy(3,:),classifier.EVdiff.error(3,:)] = Classification_down(Prepped.data32,0,iterations,6);
+[classifier.EVchoice.maccuracy(3,:),classifier.EVchoice.error(3,:)] = Classification_down(Prepped.data32,0,iterations,7);
+[classifier.PrevChoice.maccuracy(3,:),classifier.PrevChoice.error(3,:)] = Classification_down(Prepped.data32,0,iterations,8);
+[classifier.PrevChoiceSide.maccuracy(3,:),classifier.PrevChoiceSide.error(3,:)] = Classification_down(Prepped.data32,0,iterations,9);
+
+disp('Classifier 24')
+[classifier.Choice.maccuracy(4,:),classifier.Choice.error(4,:)] = Classification_down(Prepped.data24,1,iterations,1);
+[classifier.Side1.maccuracy(4,:),classifier.Side1.error(4,:)] = Classification_down(Prepped.data24,1,iterations,2);
+[classifier.SideC.maccuracy(4,:),classifier.SideC.error(4,:)] = Classification_down(Prepped.data24,1,iterations,3);
+[classifier.EV1.maccuracy(4,:),classifier.EV1.error(4,:)] = Classification_down(Prepped.data24,1,iterations,4);
+[classifier.EV2.maccuracy(4,:),classifier.EV2.error(4,:)] = Classification_down(Prepped.data24,1,iterations,5);
+[classifier.EVdiff.maccuracy(4,:),classifier.EVdiff.error(4,:)] = Classification_down(Prepped.data24,1,iterations,6);
+[classifier.EVchoice.maccuracy(4,:),classifier.EVchoice.error(4,:)] = Classification_down(Prepped.data24,1,iterations,7);
+[classifier.PrevChoice.maccuracy(4,:),classifier.PrevChoice.error(4,:)] = Classification_down(Prepped.data24,1,iterations,8);
+[classifier.PrevChoiceSide.maccuracy(4,:),classifier.PrevChoiceSide.error(4,:)] = Classification_down(Prepped.data24,1,iterations,9);
+
+disp('Classifier Shuffle')
+classifier.Choice.shuffled = mean(classifier.Choice.maccuracy(:,5));
+classifier.Side1.shuffled = mean(classifier.Side1.maccuracy(:,5));
+classifier.SideC.shuffled = mean(classifier.SideC.maccuracy(:,5));
+classifier.EV1.shuffled = mean(classifier.EV1.maccuracy(:,5));
+classifier.EV2.shuffled = mean(classifier.EV2.maccuracy(:,5));
+classifier.EVdiff.shuffled = mean(classifier.EVdiff.maccuracy(:,5));
+classifier.EVchoice.shuffled = mean(classifier.EVchoice.maccuracy(:,5));
+classifier.PrevChoice.shuffled = mean(classifier.PrevChoice.maccuracy(:,5));
+classifier.PrevChoiceSide.shuffled = mean(classifier.PrevChoiceSide.maccuracy(:,5));

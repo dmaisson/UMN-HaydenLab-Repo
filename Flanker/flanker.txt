@@ -1,0 +1,32 @@
+
+Condition	Info	Frequency	Block	Timing File	TaskObject#1	TaskObject#2	TaskObject#3	TaskObject#4	TaskObject#5	TaskObject#6	TaskObject#7	TaskObject#8	TaskObject#9	TaskObject#10	TaskObject#11
+1	'samp','A','match',-1	1	1 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+2	'samp','A','match',-1	1	2 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A,5,0)	pic(A,10,0)	pic(A,-5,0)	pic(A,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+3	'samp','A','match',-1	1	2 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(B,5,0)	pic(B,10,0)	pic(B,-5,0)	pic(B,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+4	'samp','A','match',-1	1	2 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(C,5,0)	pic(C,10,0)	pic(C,-5,0)	pic(C,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+5	'samp','A','match',-1	1	2 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(D,5,0)	pic(D,10,0)	pic(D,-5,0)	pic(D,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+
+6	'samp','A','match',-1	1	3 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A10,5,0)	pic(A10,10,0)	pic(A10,-5,0)	pic(A10,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+7	'samp','A','match',-1	1	3 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(B10,5,0)	pic(B10,10,0)	pic(B10,-5,0)	pic(B10,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+8	'samp','A','match',-1	1	3 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(C10,5,0)	pic(C10,10,0)	pic(C10,-5,0)	pic(C10,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+9	'samp','A','match',-1	1	3 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(D10,5,0)	pic(D10,10,0)	pic(D10,-5,0)	pic(D10,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+
+10	'samp','A','match',-1	1	4 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A20,5,0)	pic(A20,10,0)	pic(A20,-5,0)	pic(A20,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+11	'samp','A','match',-1	1	4 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(B20,5,0)	pic(B20,10,0)	pic(B20,-5,0)	pic(B20,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+12	'samp','A','match',-1	1	4 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(C20,5,0)	pic(C20,10,0)	pic(C20,-5,0)	pic(C20,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+13	'samp','A','match',-1	1	4 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(D20,5,0)	pic(D20,10,0)	pic(D20,-5,0)	pic(D20,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+
+14	'samp','A','match',-1	1	5 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A30,5,0)	pic(A30,10,0)	pic(A30,-5,0)	pic(A30,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+15	'samp','A','match',-1	1	5 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(B30,5,0)	pic(B30,10,0)	pic(B30,-5,0)	pic(B30,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+16	'samp','A','match',-1	1	5 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(C30,5,0)	pic(C30,10,0)	pic(C30,-5,0)	pic(C30,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+17	'samp','A','match',-1	1	5 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(D30,5,0)	pic(D30,10,0)	pic(D30,-5,0)	pic(D30,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+
+18	'samp','A','match',-1	1	6 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A40,5,0)	pic(A40,10,0)	pic(A40,-5,0)	pic(A40,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+19	'samp','A','match',-1	1	6 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(B40,5,0)	pic(B40,10,0)	pic(B40,-5,0)	pic(B40,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+20	'samp','A','match',-1	1	6 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(C40,5,0)	pic(C40,10,0)	pic(C40,-5,0)	pic(C40,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+21	'samp','A','match',-1	1	6 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(D40,5,0)	pic(D40,10,0)	pic(D40,-5,0)	pic(D40,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+
+22	'samp','A','match',-1	1	7 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A50,5,0)	pic(A50,10,0)	pic(A50,-5,0)	pic(A50,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+23	'samp','A','match',-1	1	7 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(B50,5,0)	pic(B50,10,0)	pic(B50,-5,0)	pic(B50,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+24	'samp','A','match',-1	1	7 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(C50,5,0)	pic(C50,10,0)	pic(C50,-5,0)	pic(C50,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)
+25	'samp','A','match',-1	1	7 	test_rect	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(D50,5,0)	pic(D50,10,0)	pic(D50,-5,0)	pic(D50,-10,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(E,0,0)

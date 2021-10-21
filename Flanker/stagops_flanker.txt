@@ -1,0 +1,3 @@
+
+Condition	Info	Frequency	Block	Timing File	TaskObject#1	TaskObject#2	TaskObject#3	TaskObject#4	TaskObject#5	TaskObject#6	TaskObject#7	TaskObject#8	TaskObject#9	TaskObject#10
+1	'samp','A','match',-1	1	1 	stagops_flanker	fix(0,0)	crc(1,[0 0 0],1,0,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)	pic(A,0,0)	pic(B,0,0)	pic(C,0,0)	pic(D,0,0)
