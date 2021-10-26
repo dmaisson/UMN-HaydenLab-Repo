@@ -33,7 +33,7 @@ clear iJ iK iL temp temp_avg lagmax;
 lag(1:(lag(end)),1) = (33.3:33.3:(lag(end)*33.3));
 figure;
 hold on; errorbar(lag,auto,autosem, 'o');
-ylim([0 0.15]);
+% ylim([0 0.15]);
 
 %% Fit the decay function
 % decay function = A[exp(-kD/tau)+B] %inverse is log

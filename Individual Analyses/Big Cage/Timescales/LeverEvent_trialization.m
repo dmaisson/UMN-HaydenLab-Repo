@@ -24,13 +24,13 @@ window_size = trial_length*30; %30 frames is 1 second, so 60 frames (i.e. 60 tim
 
 n = size(event_idx,2); %how many trials there will be, based on how many spikes there were
 
-psth = zeros(n,window_1seconds*2); %initialize an empty variable
+psth = zeros(n,window_size*2); %initialize an empty variable
 
 if lfp == 0 %if we're dealing with spikes
     for iA = 1:n %iterate through the trials
-        if event_idx(iA) - (window_1seconds-1) > 1 %check if there are enough times from start to first leverpress
-            if event_idx(iA)+(window_1seconds-1) < s %if there are enough data points left in the series to fit into a trial
-                psth(iA,:) = spikeSeries(1,event_idx(iA)-(window_1seconds):event_idx(iA)+(window_1seconds-1)); %take the event as the first time point, and add 1 second of the signal to the rest of the trial to both sides
+        if event_idx(iA) - (window_size-1) > 1 %check if there are enough times from start to first leverpress
+            if event_idx(iA)+(window_size-1) < s %if there are enough data points left in the series to fit into a trial
+                psth(iA,:) = spikeSeries(1,event_idx(iA)-(window_size):event_idx(iA)+(window_size-1)); %take the event as the first time point, and add 1 second of the signal to the rest of the trial to both sides
             else %if the event happened toward the end, and there aren't enough time bins left to complete the trial
                 temp = spikeSeries(1,event_idx(iA):end); %place holder for the the content that is available
                 append_var = size(temp,2); %determine how many bins are missing to be a complete trial
@@ -39,7 +39,7 @@ if lfp == 0 %if we're dealing with spikes
                 psth(iA,:) = temp; %add those zeros to the end of the "trial"
             end
         else %if there are too few bins before the lever press
-            temp = spikeSeries(1,1:event_idx(iA)+(window_1seconds-1));
+            temp = spikeSeries(1,1:event_idx(iA)+(window_size-1));
             append_var = size(temp,2);
             cat_var = zeros(1,size(psth,2) - append_var);
             temp = cat(2,cat_var,temp);
@@ -48,9 +48,9 @@ if lfp == 0 %if we're dealing with spikes
     end
 else %if we're dealing with the LFP, do the same but store the LFP series values
     for iA = 1:n %iterate through the trials
-        if event_idx(iA) - (window_1seconds-1) > 1 %check if there are enough times from start to first leverpress
-            if event_idx(iA)+(window_1seconds-1) < s %if there are enough data points left in the series to fit into a trial
-                psth(iA,:) = lfpSeries(1,event_idx(iA)-(window_1seconds):event_idx(iA)+(window_1seconds-1)); %take the event as the first time point, and add 1 second of the signal to the rest of the trial to both sides
+        if event_idx(iA) - (window_size-1) > 1 %check if there are enough times from start to first leverpress
+            if event_idx(iA)+(window_size-1) < s %if there are enough data points left in the series to fit into a trial
+                psth(iA,:) = lfpSeries(1,event_idx(iA)-(window_size):event_idx(iA)+(window_size-1)); %take the event as the first time point, and add 1 second of the signal to the rest of the trial to both sides
             else %if the event happened toward the end, and there aren't enough time bins left to complete the trial
                 temp = lfpSeries(1,event_idx(iA):end); %place holder for the the content that is available
                 append_var = size(temp,2); %determine how many bins are missing to be a complete trial
@@ -59,7 +59,7 @@ else %if we're dealing with the LFP, do the same but store the LFP series values
                 psth(iA,:) = temp; %add those zeros to the end of the "trial"
             end
         else %if there are too few bins before the lever press
-            temp = lfpSeries(1,1:event_idx(iA)+(window_1seconds-1));
+            temp = lfpSeries(1,1:event_idx(iA)+(window_size-1));
             append_var = size(temp,2);
             cat_var = zeros(1,size(psth,2) - append_var);
             temp = cat(2,cat_var,temp);
