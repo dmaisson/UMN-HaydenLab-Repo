@@ -1,4 +1,4 @@
-function psth = LeverEvent_trialization(in,lfp)
+function psth = LeverEvent_trialization(in,lfp,trial_length)
 
 % in should be the cell-separated structure array
     %spikeSeries is the structure field containing the raw spike series
@@ -7,6 +7,8 @@ function psth = LeverEvent_trialization(in,lfp)
     %lfpSeries is the down-sampled, pre-processed LFP time series field
     %eventSeries is the structure field containing a row vector of
         %leverpress events, binned against the captured frames
+    %trial_length: indicates how many seconds the trial should be on either
+        %side of the leverpress
         
 eventSeries = in.eventSeries;
 spikeSeries = in.spikeSeries;
@@ -18,7 +20,7 @@ event_idx = find(eventSeries == 1);
 
 s = size(eventSeries,2); %data is time binned by capture data frame-rate (30Hz) i.e. 33.3 ms
 
-window_1seconds = 30; %30 frames is 1 second, so 60 frames (i.e. 60 time bins) is 2 seconds of data
+window_size = trial_length*30; %30 frames is 1 second, so 60 frames (i.e. 60 time bins) is 2 seconds of data
 
 n = size(event_idx,2); %how many trials there will be, based on how many spikes there were
 

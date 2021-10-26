@@ -1,4 +1,4 @@
-function [L] = Latency_Murray_SmDelta(start,laglen)
+function [L] = Timescales(start,lagmax)
 %% Instructions
 %   - autocorrelate between time bins across trials for each cell
 % 	- fit the decay function to the autocorrelation data (using levenberg-marquardt)
@@ -7,31 +7,30 @@ function [L] = Latency_Murray_SmDelta(start,laglen)
 % 		- predictor: timescale; outcome: autocorrelation offset
 % 		- predictor: mFR; outcome: timescale
 % 		- predictor: trial-trial correlation; outcome autocorrelation offset
-%% Pull out the desired data and shrink it to 40ms bins
-data = psth_resample_align(start);
 
-for iJ = 1:size(data,1)
-    forespikes{iJ} = data{iJ}(:,50:149);
-end
-forespikes = forespikes';
-clear data fore iJ start;
+% inputs:
+    % start: a trialized psth for a single cell/channel
+    % lagmax: the maximum lag length (in number of bins)
+        % this is equal to the number of bins * 33.3ms, such that lagmax of
+        % 10 is equal to a maximum lag of 333ms between the points being
+        % correlated
 
 %% Autocorrelation
 % Correlation between data @ time i and itself @ time j
-laglen = laglen/20;
-lag(:,1) = (1:laglen); % 20ms - 360ms
-for iJ = 1:length(lag) % for each difference in time between bins (from 40-360ms)
-    for iK = 1:size(forespikes,1) % for each cell
-        for iL = 1:(size(forespikes{iK},2)-lag(iJ)) % for each bin
-            temp(iK,iL) = corr(forespikes{iK}(:,iL),forespikes{iK}(:,iL+lag(iJ))); % correlate bin i and bin j, where i and j are separate by a time distance defined by lag
+% laglen = laglen/20;
+lag(:,1) = (1:lagmax); % 33.3ms - lagmax*33.3 ms
+for iJ = 1:length(lag) % for each difference in time between bins (from 66.6-333ms)
+    for iK = 1:size(start,1) % for each cell
+        for iL = 1:(size(start{iK},2)-lag(iJ)) % for each bin
+            temp(iK,iL) = corr(start{iK}(:,iL),start{iK}(:,iL+lag(iJ))); % correlate bin i and bin j, where i and j are separate by a time distance defined by lag
         end
     end
     temp_avg(:,iJ) = nanmean(temp,2);
 end
 auto = (nanmean(temp_avg,1))';
 autosem = ((nanstd(temp_avg,1))/sqrt(size(temp_avg,1)));
-clear iJ iK iL temp temp_avg laglen;
-lag(1:(lag(end)),1) = (20:20:(lag(end)*20));
+clear iJ iK iL temp temp_avg lagmax;
+lag(1:(lag(end)),1) = (33.3:33.3:(lag(end)*33.3));
 figure;
 hold on; errorbar(lag,auto,autosem, 'o');
 ylim([0 0.15]);
