@@ -9,3 +9,10 @@ for iA = 1:size(OFC,1)
 end
 
 [timescales_LeverPressTrials] = Timescales(psth,20);
+
+for iA = 1:size(OFC,1)
+    psth{iA,1} = Epoch_trialization(OFC{iA},0,2,100);
+end
+
+[timescales_epochs] = Timescales_epochs(start,20);
+
