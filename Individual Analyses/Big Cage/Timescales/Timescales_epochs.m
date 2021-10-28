@@ -1,4 +1,4 @@
-function [T] = Timescales_epochs(start,lagmax)
+function T = Timescales_epochs(start,lagmax)
 %% Instructions
 %   - autocorrelate between time bins across trials for each cell
 % 	- fit the decay function to the autocorrelation data (using levenberg-marquardt)
