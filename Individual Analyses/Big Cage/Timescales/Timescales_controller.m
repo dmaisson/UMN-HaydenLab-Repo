@@ -30,9 +30,10 @@ for iA = 1:size(days,1)
     psth{iA,1} = Epoch_trialization(days{iA,2},0,2,100);
     timescales_epochs{iA,1} = Timescales_epochs(psth{iA,1},20);
 end
-
-for iA = 1:size(timescales_epochs.tau,1)
-    taus(iA,1) = timescales_epochs.tau{iA};
+for iA = 1:size(timescales_epochs,1)
+for iB = 1:size(timescales_epochs{iA}.tau,1)
+    taus(iA,iB) = timescales_epochs{iA}.tau{iB};
+end
 end
 plot(taus,'LineWidth',1);
 ylabel('timescale (tau)');
