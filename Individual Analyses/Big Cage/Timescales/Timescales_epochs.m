@@ -1,4 +1,4 @@
-function T = Timescales_epochs(start,lagmax)
+function T = Timescales_epochs(start,lagmax,plt)
 %% Instructions
 %   - autocorrelate between time bins across trials for each cell
 % 	- fit the decay function to the autocorrelation data (using levenberg-marquardt)
@@ -14,6 +14,7 @@ function T = Timescales_epochs(start,lagmax)
         % this is equal to the number of bins * 33.3ms, such that lagmax of
         % 10 is equal to a maximum lag of 333ms between the points being
         % correlated
+    % plt: 1 for include, 0 for exclude
 
 %% Autocorrelation
 % Correlation between data @ time i and itself @ time j
@@ -35,9 +36,11 @@ for iA = 1:size(start,1)
     autosem(isnan(autosem)) = 0;
     clear iJ iK iL temp temp_avg;
     lag(1:(lag(end)),1) = (33.3:33.3:(lag(end)*33.3));
-%     figure;
-%     hold on; errorbar(lag,auto,autosem, 'o');
-%     ylim([0 0.15]);
+    if plt == 1
+        figure;
+        hold on; errorbar(lag,auto,autosem, 'o');
+        ylim([0 0.15]);
+    end
     
     %% Fit the decay function
     % decay function = A[exp(-kD/tau)+B] %inverse is log
@@ -56,7 +59,9 @@ for iA = 1:size(start,1)
     x0 = [1 0 0];
     decay_fun = fittype( @(A,b,B,x) (A*(exp((x*b))+B)) );
     decay = fit(lag,auto,decay_fun, 'StartPoint', x0);
-%     plot(decay,lag,auto);
+    if plt == 1
+        plot(decay,lag,auto);
+    end
     
     %% Maximize fit
     % sum of squared differences between data and line
@@ -82,7 +87,7 @@ for iA = 1:size(start,1)
     T.lag{iA,1} = lag;
     T.SSe{iA,1} = SSe;
     
-    clearvars -except iA start lagmax T
+    clearvars -except iA start lagmax T plt
 end
 
 end

@@ -1,4 +1,4 @@
-function psth = Epoch_trialization(in,lfp,trial_length,epochs)
+function psth = Epoch_trialization(in,lfp,trial_length,epochs,res)
 
 % in should be the cell-separated structure array
     %spikeSeries is the structure field containing the raw spike series
@@ -8,6 +8,8 @@ function psth = Epoch_trialization(in,lfp,trial_length,epochs)
     %trial_length: indicates how many seconds the trial should be following
         %a start time
     %epochs: indicates the number of continuous epochs
+    %res: a flag to indicate if the spike series should be the
+        %reward_residualized signal or the now (0: raw, 1: res)
 
         
     window_size = trial_length*30; %30 frames is 1 second, so 60 frames (i.e. 60 time bins) is 2 seconds of data
@@ -23,7 +25,11 @@ function psth = Epoch_trialization(in,lfp,trial_length,epochs)
     end
     
     for iA = 1:size(in,1)
-        spikeSeries = in{iA}.spikeSeries;
+        if res == 0
+            spikeSeries = in{iA}.spikeSeries;
+        else
+            spikeSeries = in{iA}.resSeries;
+        end
         if lfp == 1
             lfpSeries = in{iA}.lfpSeries;
         end
