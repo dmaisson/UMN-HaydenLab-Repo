@@ -5,6 +5,21 @@ y_shift = x_shift;
 for iA = 1:size(x_shift,2)
     for iB = 1:size(y_shift,2)
         x = binned_rates;
+        y = circshift(binned_rates,(x_shift(iA)),1);
+        y = circshift(y,-1*(y_shift(iB)),2);
+        a = x(1+x_shift(iA):end,1:end-y_shift(iB));
+        b = y(1+x_shift(iA):end,1:end-y_shift(iB));
+        a = a(:);
+        b = b(:);
+        upper_left(iA,iB) = corr(a,b);
+        clear x y a b 
+    end
+end
+upper_left = flip(upper_left,2);
+clear iA iB
+for iA = 1:size(x_shift,2)
+    for iB = 1:size(y_shift,2)
+        x = binned_rates;
         y = circshift(binned_rates,x_shift(iA),1);
         y = circshift(y,y_shift(iB),2);
         a = x(1+x_shift(iA):end,1+y_shift(iB):end);
@@ -29,22 +44,8 @@ for iA = 1:size(x_shift,2)
         clear x y a b 
     end
 end
-lower_left = rot90(lower_left,2);
-clear iA iB
-for iA = 1:size(x_shift,2)
-    for iB = 1:size(y_shift,2)
-        x = binned_rates;
-        y = circshift(binned_rates,(x_shift(iA)),1);
-        y = circshift(y,-1*(y_shift(iB)),2);
-        a = x(1+x_shift(iA):end,1:end-y_shift(iB));
-        b = y(1+x_shift(iA):end,1:end-y_shift(iB));
-        a = a(:);
-        b = b(:);
-        upper_left(iA,iB) = corr(a,b);
-        clear x y a b 
-    end
-end
-upper_left = rot90(upper_left,3);
+lower_left = flip(lower_left,2);
+lower_left = flip(lower_left,1);
 clear iA iB
 for iA = 1:size(x_shift,2)
     for iB = 1:size(y_shift,2)
@@ -59,7 +60,7 @@ for iA = 1:size(x_shift,2)
         clear x y a b 
     end
 end
-lower_right = rot90(lower_right,1);
+lower_right = flip(lower_right,1);
 clear iA iB
 
 upper_half = cat(2,upper_left,upper_right);
