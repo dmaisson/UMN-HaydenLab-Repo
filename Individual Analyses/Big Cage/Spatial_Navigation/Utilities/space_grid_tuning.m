@@ -104,10 +104,38 @@ function out = space_grid_tuning(set,tracking,bin_size)
             binned_track(track_location(iA,1)) = binned_track(track_location(iA,1)) + 1;
         end
         
-        binned_rates = (imgaussfilt(binned_spikes,1.5)./imgaussfilt(binned_track,1.5))*30;
+        binned_rates = (binned_spikes./binned_track).*30;
         binned_rates(isnan(binned_rates(:))) = 0;
         binned_rates(isinf(binned_rates(:))) = 0;
+        binned_rates = smooth_2d_ratemap(binned_rates, 5);
 %         cleavars -except binned_rates binned_spikes binned_track spike_locations spike_times track_location
+
+        %% Field centers
+        
+        field_center_rate = max(binned_rates(:));
+        center_map = zeros(size(binned_rates,1));
+        for iA = 1:numel(center_map)
+            if binned_rates(iA) >= 0.4*field_center_rate
+                center_map(iA) = 1;
+            end
+        end
+        [field_center(1,:),field_center(2,:)] = find(binned_rates == max(binned_rates(:)));
+        
+%         min_field_size = numel(binned_rates) * 0.01;
+%         max_field_size = numel(binned_rates) * 0.25;
+%         field_size = 0;
+        
+%         for iA = 1:size(binned_rates,1)
+%             for iB = 1:size(binned_rates,2)
+%                 if center_map(iA,iB) == 1
+%                     if center_map(iA+1,iB) == 1
+%                         if center_map(iA,iB+1) == 1
+%                             field_size = field_size + 1;
+%                         end
+%                     end
+%                 end
+%             end
+%         end
         
         %% spatial information
         for iA = 1:numel(locations)
@@ -118,41 +146,48 @@ function out = space_grid_tuning(set,tracking,bin_size)
         end
         spatial_information = nansum(info_i);
         
+        %% cross-temporal correlations
+        
+        
+        
         %% autocorrelagram
-        for iA = 1:numel(binned_rates)
-            rate_location(iA,1) = binned_rates(iA);
-        end
-        rate_location(isnan(rate_location)) = 0;
-        tau = (1:size(rate_location,1))';
+%         for iA = 1:numel(binned_rates)
+%             rate_location(iA,1) = binned_rates(iA);
+%         end
+%         rate_location(isnan(rate_location)) = 0;
+%         tau = (1:size(rate_location,1))';
+%         
+%         for iA = 1:size(rate_location,1)
+%             if iA == 1
+%                 shifted_location = rate_location;
+%                 space_autocorr_lin(iA,1) = corr(rate_location(:,1),shifted_location(:,1),'Type','Pearson');
+%             else
+%                 shift = tau(iA:end);
+%                 dropped = 1:shift(1); dropped(end) = []; dropped = dropped';
+%                 shift = cat(1,shift,dropped);
+%                 for iB = 1:size(shift,1)
+%                     shifted_location(iB,1) = rate_location(shift(iB,1),1);
+%                 end
+%                 space_autocorr_lin(iA,1) = corr(rate_location(:,1),shifted_location(:,1),'Type','Pearson');
+%                 clear shift dropped shifted_location;
+%             end
+%         end
+%         
+%         space_autocorr_binned = zeros(x_axis);
+%         for iA = 1:size(space_autocorr_lin,1)
+%             space_autocorr_binned(iA) = space_autocorr_lin(iA,1);
+%         end
         
-        for iA = 1:size(rate_location,1)
-            if iA == 1
-                shifted_location = rate_location;
-                space_autocorr_lin(iA,1) = corr(rate_location(:,1),shifted_location(:,1),'Type','Pearson');
-            else
-                shift = tau(iA:end);
-                dropped = 1:shift(1); dropped(end) = []; dropped = dropped';
-                shift = cat(1,shift,dropped);
-                for iB = 1:size(shift,1)
-                    shifted_location(iB,1) = rate_location(shift(iB,1),1);
-                end
-                space_autocorr_lin(iA,1) = corr(rate_location(:,1),shifted_location(:,1),'Type','Pearson');
-                clear shift dropped shifted_location;
-            end
-        end
-        
-        space_autocorr_binned = zeros(x_axis);
-        for iA = 1:size(space_autocorr_lin,1)
-            space_autocorr_binned(iA) = space_autocorr_lin(iA,1);
-        end
+        autocorrelogram = spatial_autocorrelogram(binned_rates,x_axis);
         
         %% Calculate gridness score
         
         
         
         %% collect
-        out.space_autocorr_binned = space_autocorr_binned;
+        out.autocorrelogram = autocorrelogram;
         out.binned_rates = binned_rates;
         out.binned_track = binned_track;
         out.binned_spikes = binned_spikes;
         out.spatial_information = spatial_information;
+        out.field_center = field_center;
