@@ -104,7 +104,7 @@ function out = space_grid_tuning(set,tracking,bin_size)
             binned_track(track_location(iA,1)) = binned_track(track_location(iA,1)) + 1;
         end
         
-        binned_rates = (binned_spikes./binned_track).*30;
+        binned_rates = (binned_spikes./binned_track).*33.3;
         binned_rates(isnan(binned_rates(:))) = 0;
         binned_rates(isinf(binned_rates(:))) = 0;
         binned_rates = smooth_2d_ratemap(binned_rates, 5);
@@ -183,6 +183,8 @@ function out = space_grid_tuning(set,tracking,bin_size)
         %% Calculate gridness score
         
         
+%         [gridSize, gridOrientation, ellipseCoords, orientationAngs, ...
+%             sixPkCoords, threeAngleCoords] = get_gridfield_stats(autocorrelogram);
         
         %% collect
         out.autocorrelogram = autocorrelogram;
