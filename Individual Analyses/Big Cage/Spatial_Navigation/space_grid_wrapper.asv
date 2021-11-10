@@ -15,26 +15,24 @@ end
 %% significance testing
 bootstrap = 500;
 
-for iB = 1:numel(OFC)
-    spike_day = OFC{iB}.day;
-    for iC = 1:numel(tracking_data)
-        tracking_day = tracking_data(iC).date;
-        if sum((tracking_day == spike_day)) == 10
-            idx = iC;
+    for iB = 1:numel(OFC)
+        spike_day = OFC{iB}.day;
+        for iC = 1:numel(tracking_data)
+            tracking_day = tracking_data(iC).date;
+            if sum((tracking_day == spike_day)) == 10
+                idx = iC;
+            end
         end
-    end
-    tracking_day = tracking_data(idx).date;
-    tracking = tracking_data(idx);
-    set = OFC{iB};
-    for iA = 1:bootstrap
         shift_frames = randi([300,900]);
+        set = OFC{iB};
         set.resSeries = circshift(set.resSeries,shift_frames);
+        tracking_day = tracking_data(idx).date;
+        tracking = tracking_data(idx);
         time_shift_control = space_grid_tuning(set,tracking,10);
         shifted_grid_score(iB,iA) = time_shift_control.grid_score;
         shifted_SI(iB,iA) = time_shift_control.spatial_information;
         clear tracking spike_day tracking_day idx time_shift_control set shift_frames
     end
-end
 
 for iA = 1:size(OFC,1)
     x = sort(shifted_grid_score(iA,:));
