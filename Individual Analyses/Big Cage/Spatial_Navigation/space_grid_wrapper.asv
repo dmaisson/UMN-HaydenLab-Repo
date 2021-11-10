@@ -13,8 +13,7 @@ for iA = 1:numel(OFC)
 end
 
 %% significance testing
-bootstrap = 500;
-for iA = 1:bootstrap
+for iA = 1:500
     for iB = 1:numel(OFC)
         spike_day = OFC{iB}.day;
         for iC = 1:numel(tracking_data)
@@ -35,18 +34,10 @@ for iA = 1:bootstrap
     end
 end
 
-for iA = 1:size(OFC,1)
-    x = sort(shifted_grid_score(iA,:));
-    y = space_grid{iA}.grid_score;
-    z = find(y>x);
-    space_grid{iA,1}.grid_score_p = 1-(size(z,2)/bootstrap);
-    clear x y z
-    x = sort(shifted_SI(iA,:));
-    y = space_grid{iA}.spatial_information;
-    z = find(y>x);
-    space_grid{iA,1}.SI_p = 1-(size(z,2)/bootstrap);
-    clear x y z
-end
+x = sort(shifted_grid_score(1,:));
+y = space_grid{1}.grid_score;
+z = find(y>x);
+grid_score_p = (size(z,2)/iA);
 
 %%
 pick = randperm(size(grid_idx,1));

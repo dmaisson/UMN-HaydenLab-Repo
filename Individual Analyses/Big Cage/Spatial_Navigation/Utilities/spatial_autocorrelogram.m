@@ -1,6 +1,6 @@
-function autocorrelogram = spatial_autocorrelogram(binned_rates,x_axis)
+function autocorrelogram = spatial_autocorrelogram(binned_rates,axis)
 
-x_shift = 0:x_axis-1;
+x_shift = 0:axis-1;
 y_shift = x_shift;
 for iA = 1:size(x_shift,2)
     for iB = 1:size(y_shift,2)
@@ -15,7 +15,7 @@ for iA = 1:size(x_shift,2)
         clear x y a b 
     end
 end
-upper_left = flip(upper_left,2);
+upper_left = fliplr(upper_left);
 clear iA iB
 for iA = 1:size(x_shift,2)
     for iB = 1:size(y_shift,2)
@@ -44,8 +44,8 @@ for iA = 1:size(x_shift,2)
         clear x y a b 
     end
 end
-lower_left = flip(lower_left,2);
-lower_left = flip(lower_left,1);
+lower_left = fliplr(lower_left);
+lower_left = flipud(lower_left);
 clear iA iB
 for iA = 1:size(x_shift,2)
     for iB = 1:size(y_shift,2)
@@ -60,7 +60,7 @@ for iA = 1:size(x_shift,2)
         clear x y a b 
     end
 end
-lower_right = flip(lower_right,1);
+lower_right = flipud(lower_right);
 clear iA iB
 
 upper_half = cat(2,upper_left,upper_right);
