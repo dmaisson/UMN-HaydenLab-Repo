@@ -47,6 +47,7 @@ for iA = 1:size(OFC,1)
     space_grid{iA,1}.SI_p = 1-(size(z,2)/bootstrap);
     clear x y z
 end
+clear shifted_grid_score shifted_SI
 
 %%
 pick = randperm(size(grid_idx,1));
