@@ -27,13 +27,17 @@ for iB = 1:numel(OFC)
     tracking = tracking_data(idx);
     set = OFC{iB};
     for iA = 1:bootstrap
+        disp(['bootstrapping; ', 'cell: ', num2str(iB), '; ', 'boostrap: ', num2str(iA)]);
+        tic
         shift_frames = randi([300,900]);
         set.resSeries = circshift(set.resSeries,shift_frames);
         time_shift_control = space_grid_tuning(set,tracking,10);
         shifted_grid_score(iB,iA) = time_shift_control.grid_score;
         shifted_SI(iB,iA) = time_shift_control.spatial_information;
-        clear tracking spike_day tracking_day idx time_shift_control set shift_frames
+        clear shift_frames time_shift_control
+        toc
     end
+    clear tracking spike_day tracking_day idx set
 end
 
 for iA = 1:size(OFC,1)
