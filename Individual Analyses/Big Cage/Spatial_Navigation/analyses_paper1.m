@@ -9,7 +9,7 @@
     % head direction - DONE
         % check rate preference for each quadrant
     % egocentric boundary - DONE
-    % gridness/spatial autocorrelation (Brandon, 2011)
+    % gridness/spatial autocorrelation (Brandon, 2011) - DONE
     
     % For 3D - add
         % COM/head height
