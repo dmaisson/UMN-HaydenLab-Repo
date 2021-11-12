@@ -15,7 +15,8 @@
         % COM/head height
         % angular velocity
         % head tilt
-        % azimuth head direction
+        
+        % Ginosar, 2021 Fig 2
 
 % nonlocal spatial code (Dotson, 2021)
 

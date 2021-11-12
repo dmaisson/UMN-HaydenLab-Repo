@@ -1,9 +1,8 @@
-function out = space_grid_tuning(set,tracking,bin_size)
+function out = space_grid_tuning(set,tracking,bin_size,CTC)
 % spatial and grid tuning
 
 window = 1:size(set.resSeries,2);
 [binned_rates,binned_spikes,binned_track,locations,track_times] = rate_maps(set,tracking,bin_size,window);
-
 
         %% Field centers
         
@@ -42,38 +41,40 @@ window = 1:size(set.resSeries,2);
         spatial_information = nansum(info_i);
         
         %% cross-temporal correlations
-        ten_min = (10*60)*30;
-        five_min = ten_min/2;
-        
-        counter = 1;
-        iterator = 1;
-        while counter < (size(window,2) - ten_min)
-            windows(iterator,:) = counter:(ten_min+counter)-1;
-            counter = counter+five_min;
-            iterator = iterator + 1;
-        end
-        clear counter iterator ten_min five_min
-        
-        for iA = 1:size(windows,1)
-            [binned_rates_sm{iA,1},~,~] = rate_maps(set,tracking,bin_size,windows(iA,:));
-        end
-        
-        for iA = 1:size(binned_rates_sm,1)
-            for iB = 1:size(binned_rates_sm,1)
-                first = binned_rates_sm{iA}(:);
-                second = binned_rates_sm{iB}(:);
-                cross_temp_corr(iA,iB) = corr(first,second);
-                clear first second
+        if CTC == 1
+            ten_min = (10*60)*30;
+            five_min = ten_min/2;
+            
+            counter = 1;
+            iterator = 1;
+            while counter < (size(window,2) - ten_min)
+                windows(iterator,:) = counter:(ten_min+counter)-1;
+                counter = counter+five_min;
+                iterator = iterator + 1;
             end
+            clear counter iterator ten_min five_min
+            
+            for iA = 1:size(windows,1)
+                [binned_rates_sm{iA,1},~,~] = rate_maps(set,tracking,bin_size,windows(iA,:));
+            end
+            
+            for iA = 1:size(binned_rates_sm,1)
+                for iB = 1:size(binned_rates_sm,1)
+                    first = binned_rates_sm{iA}(:);
+                    second = binned_rates_sm{iB}(:);
+                    cross_temp_corr(iA,iB) = corr(first,second);
+                    clear first second
+                end
+            end
+            clear binned_rates_sm windows iA iB window
+            out.cross_temp_corr = cross_temp_corr;
         end
-        clear binned_rates_sm windows iA iB window
-        
+        % 2 sec run-time
         %% autocorrelagram
         
         autocorrelogram = spatial_autocorrelogram(binned_rates,size(binned_rates,2));
         
         %% Calculate gridness score
-        
         grid_score = gridness(autocorrelogram);
         
         %% collect
@@ -84,4 +85,3 @@ window = 1:size(set.resSeries,2);
         out.spatial_information = spatial_information;
 %         out.field_center = field_center;
         out.grid_score = grid_score;
-        out.cross_temp_corr = cross_temp_corr;
