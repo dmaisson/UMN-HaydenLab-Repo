@@ -1,4 +1,6 @@
 for iA = 1:numel(OFC)
+    tic
+    disp(['original: ', num2str(iA)])
     spike_day = OFC{iA}.day;
     for iB = 1:numel(tracking_data)
         tracking_day = tracking_data(iB).date;
@@ -6,16 +8,16 @@ for iA = 1:numel(OFC)
             idx = iB;
         end
     end
-    tracking_day = tracking_data(idx).date;
     tracking = tracking_data(idx);
-    space_grid{iA,1} = space_grid_tuning(OFC{iA},tracking,10);
+    space_grid{iA,1} = space_grid_tuning(OFC{iA},tracking,10,1);
     clear tracking spike_day tracking_day idx
+    toc
 end
 
 %% significance testing
 bootstrap = 500;
 
-for iB = 1:numel(OFC)
+for iB = 105:401 %numel(OFC)
     spike_day = OFC{iB}.day;
     for iC = 1:numel(tracking_data)
         tracking_day = tracking_data(iC).date;
@@ -31,7 +33,7 @@ for iB = 1:numel(OFC)
         tic
         shift_frames = randi([300,900]);
         set.resSeries = circshift(set.resSeries,shift_frames);
-        time_shift_control = space_grid_tuning(set,tracking,10);
+        time_shift_control = space_grid_tuning(set,tracking,10,0);
         shifted_grid_score(iB,iA) = time_shift_control.grid_score;
         shifted_SI(iB,iA) = time_shift_control.spatial_information;
         clear shift_frames time_shift_control
@@ -40,7 +42,8 @@ for iB = 1:numel(OFC)
     clear tracking spike_day tracking_day idx set
 end
 
-for iA = 1:size(OFC,1)
+%%
+for iA = 105:401 %1:size(shifted_grid_score,1)
     x = sort(shifted_grid_score(iA,:));
     y = space_grid{iA}.grid_score;
     z = find(y>x);

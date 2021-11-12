@@ -12,6 +12,10 @@ com_temp = com_temp(:,window);
 resSeries(2,:) = com_temp(1,:)*100;
 resSeries(3,:) = com_temp(3,:)*100;
 resSeries(4,:) = com_temp(2,:)*100;
+track_times = 1:size(resSeries,2);
+track_x = resSeries(2,:)';
+track_y = resSeries(3,:)';
+%         track_z = resSeries(4,:)';
 
 bin_x = linspace(min(resSeries(2,:)),max(resSeries(2,:)),x_axis);
 bin_y = linspace(min(resSeries(3,:)),max(resSeries(3,:)),y_axis);
@@ -28,6 +32,7 @@ end
 
 bin_x(1,end+1) = bin_x(1,end)+999;
 bin_y(1,end+1) = bin_y(1,end)+999;
+track_location(1:size(track_times,2),1) = NaN;
 
 for iA = 1:x_axis
     for iB = 1:y_axis
@@ -37,18 +42,6 @@ for iA = 1:x_axis
                 resSeries(5,iC) = locations(iA,iB);
             end
         end
-    end
-end
-
-track_times = 1:size(resSeries,2);
-track_x = tracking.com(window,1)*100;
-track_y = tracking.com(window,3)*100;
-%         track_z = tracking.com(:,2)*100;
-clear com
-
-track_location(1:size(track_times,2),1) = NaN;
-for iA = 1:x_axis
-    for iB = 1:y_axis
         for iC = 1:size(track_times,2)
             if (track_x(iC,1) >= bin_x(1,iA) && track_x(iC,1) < bin_x(1,iA+1)) ...
                     && (track_y(iC,1) >= bin_y(1,iB) && track_y(iC,1) < bin_y(1,iB+1))
@@ -57,8 +50,8 @@ for iA = 1:x_axis
         end
     end
 end
+clear com
 
-%
 resSeries = resSeries(:,~isnan(resSeries(2,:)));
 binned_spikes(1:size(locations,1),1:size(locations,1)) = 0;
 for iA = 1:size(resSeries,2)
