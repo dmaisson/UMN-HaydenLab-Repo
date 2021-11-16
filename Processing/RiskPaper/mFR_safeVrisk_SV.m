@@ -59,7 +59,7 @@ for iJ = 1:length(in)
         if in{iJ}.vars(iK,2) == 1
             % 1. safe offers
             safe.Ep1{iJ,1}.vars(iK,:) = in{iJ}.vars(iK,1:4);
-            safe.Ep1{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,7);
+            safe.Ep1{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,9);
             safe.Ep1{iJ,1}.psth(iK,:) = in{iJ}.psth(iK,155:179);
         elseif in{iJ}.vars(iK,2) == 2
             % 2. risky offers with low stakes
@@ -67,7 +67,7 @@ for iJ = 1:length(in)
                 if in{iJ}.vars(iK,1) > probs(iL) && ...
                         in{iJ}.vars(iK,1) <= probs(iL+1) %if prob is in range
                     tlow.Ep1{iL,1}.cell{iJ,1}.vars(iK,:) = in{iJ}.vars(iK,1:4);
-                    tlow.Ep1{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,7);
+                    tlow.Ep1{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,9);
                     tlow.Ep1{iL,1}.cell{iJ,1}.psth(iK,:) = in{iJ}.psth(iK,155:179);
                 end
             end
@@ -77,7 +77,7 @@ for iJ = 1:length(in)
                 if in{iJ}.vars(iK,1) > probs(iL) && ...
                         in{iJ}.vars(iK,1) <= probs(iL+1) %if prob is in range
                     thigh.Ep1{iL,1}.cell{iJ,1}.vars(iK,:) = in{iJ}.vars(iK,1:4);
-                    thigh.Ep1{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,7);
+                    thigh.Ep1{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,9);
                     thigh.Ep1{iL,1}.cell{iJ,1}.psth(iK,:) = in{iJ}.psth(iK,155:179);
                 end
             end
@@ -86,7 +86,7 @@ for iJ = 1:length(in)
         if in{iJ}.vars(iK,5) == 1
             % 1. safe offers
             safe.Ep2{iJ,1}.vars(iK,:) = in{iJ}.vars(iK,4:7);
-            safe.Ep2{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,7);
+            safe.Ep2{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,9);
             safe.Ep2{iJ,1}.psth(iK,:) = in{iJ}.psth(iK,205:229);
         elseif in{iJ}.vars(iK,5) == 2
             % 2. risky offers with low stakes
@@ -94,7 +94,7 @@ for iJ = 1:length(in)
                 if in{iJ}.vars(iK,4) > probs(iL) && ...
                         in{iJ}.vars(iK,4) < probs(iL+1) %if prob is in range
                     tlow.Ep2{iL,1}.cell{iJ,1}.vars(iK,:) = in{iJ}.vars(iK,4:7);
-                    tlow.Ep2{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,7);
+                    tlow.Ep2{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,9);
                     tlow.Ep2{iL,1}.cell{iJ,1}.psth(iK,:) = in{iJ}.psth(iK,205:229);
                 end
             end
@@ -104,7 +104,7 @@ for iJ = 1:length(in)
                 if in{iJ}.vars(iK,4) > probs(iL) && ...
                         in{iJ}.vars(iK,4) < probs(iL+1) %if prob is in range
                     thigh.Ep2{iL,1}.cell{iJ,1}.vars(iK,:) = in{iJ}.vars(iK,4:7);
-                    thigh.Ep2{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,7);
+                    thigh.Ep2{iL,1}.cell{iJ,1}.vars(iK,4) = in{iJ}.vars(iK,9);
                     thigh.Ep2{iL,1}.cell{iJ,1}.psth(iK,:) = in{iJ}.psth(iK,205:229);
                 end
             end
