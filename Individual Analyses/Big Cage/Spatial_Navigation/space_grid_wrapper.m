@@ -17,7 +17,7 @@ end
 %% significance testing
 bootstrap = 500;
 
-for iB = 231:401 %numel(OFC)
+for iB = 158:numel(OFC)
     spike_day = OFC{iB}.day;
     for iC = 1:numel(tracking_data)
         tracking_day = tracking_data(iC).date;
@@ -31,7 +31,7 @@ for iB = 231:401 %numel(OFC)
     for iA = 1:bootstrap
         disp(['bootstrapping; ', 'cell: ', num2str(iB), '; ', 'boostrap: ', num2str(iA)]);
         tic
-        shift_frames = randi([300,900]);
+        shift_frames = randi([1500,4500]);
         set.resSeries = circshift(set.resSeries,shift_frames);
         time_shift_control = space_grid_tuning(set,tracking,10,0);
         shifted_grid_score(iB,iA) = time_shift_control.grid_score;
@@ -51,7 +51,7 @@ for iB = 231:401 %numel(OFC)
     space_grid{iB,1}.SI_p = 1-(size(z,2)/bootstrap);
     clear x y z
     clear shifted_grid_score shifted_SI
-    save('space_grid','space_grid','-v7.3');
+    save('space_grid_2.mat','space_grid','-v7.3');
 end
 
 %%
