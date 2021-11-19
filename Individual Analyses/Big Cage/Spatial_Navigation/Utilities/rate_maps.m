@@ -1,4 +1,4 @@
-function [binned_rates,binned_spikes,binned_track,locations,track_times] = rate_maps(set,tracking,bin_size,window)
+function [binned_rates,binned_spikes,binned_track,locations,track_times] = rate_maps(set,tracking,bin_size,win)
 
 enclosure = 300; % in cm
 
@@ -6,12 +6,10 @@ x_axis = enclosure/bin_size;
 y_axis = enclosure/bin_size;
 %         z_axis = enclosure/bin_size;
 
-resSeries = set.resSeries(1,window);
-com_temp = tracking.com';
-com_temp = com_temp(:,window);
-resSeries(2,:) = com_temp(1,:)*100;
-resSeries(3,:) = com_temp(3,:)*100;
-resSeries(4,:) = com_temp(2,:)*100;
+resSeries = set.resSeries(1,win);
+resSeries(2,:) = (tracking.com(win,1)*100)';
+resSeries(3,:) = (tracking.com(win,3)*100)';
+resSeries(4,:) = (tracking.com(win,2)*100)';
 track_times = 1:size(resSeries,2);
 track_x = resSeries(2,:)';
 track_y = resSeries(3,:)';
@@ -32,36 +30,73 @@ end
 
 bin_x(1,end+1) = bin_x(1,end)+999;
 bin_y(1,end+1) = bin_y(1,end)+999;
-track_location(1:size(track_times,2),1) = NaN;
+track_location = zeros(1,size(track_times,2));
 
+%% spiking
+x_coo = zeros(1,size(win,2));
 for iA = 1:x_axis
-    for iB = 1:y_axis
-        for iC = 1:size(resSeries,2)
-            if (resSeries(2,iC) >= bin_x(1,iA) && resSeries(2,iC) < bin_x(1,iA+1)) ...
-                    && (resSeries(3,iC) >= bin_y(1,iB) && resSeries(3,iC) < bin_y(1,iB+1))
-                resSeries(5,iC) = locations(iA,iB);
-            end
-        end
-        for iC = 1:size(track_times,2)
-            if (track_x(iC,1) >= bin_x(1,iA) && track_x(iC,1) < bin_x(1,iA+1)) ...
-                    && (track_y(iC,1) >= bin_y(1,iB) && track_y(iC,1) < bin_y(1,iB+1))
-                track_location(iC,1) = locations(iA,iB);
-            end
-        end
+    a = find(resSeries(2,:) >= bin_x(1,iA) & resSeries(2,:) < bin_x(1,iA+1));
+    if ~isempty(a)
+        x_coo(1,a(1,:)) = iA;
+    end
+    clear a
+end
+x_coo(1,x_coo==0) = NaN;
+y_coo = zeros(1,size(win,2));
+for iA = 1:y_axis
+    a = find(resSeries(3,:) >= bin_y(1,iA) & resSeries(3,:) < bin_y(1,iA+1));
+    if ~isempty(a)
+        y_coo(1,a(1,:)) = iA;
+    end
+    clear a
+end
+y_coo(1,y_coo==0) = NaN;
+for iA = 1:size(x_coo,2)
+    if ~isnan(x_coo(1,iA))
+        resSeries(5,iA) = locations(x_coo(1,iA),y_coo(1,iA));
     end
 end
-clear com
+clear x_coo y_coo
 
+%% tracking
+track_x = track_x';
+track_y = track_y';
+x_coo = zeros(1,size(win,2));
+for iA = 1:x_axis
+    a = find(track_x(1,:) >= bin_x(1,iA) & track_x(1,:) < bin_x(1,iA+1));
+    if ~isempty(a)
+        x_coo(1,a(1,:)) = iA;
+    end
+    clear a
+end
+x_coo(1,x_coo==0) = NaN;
+y_coo = zeros(1,size(win,2));
+for iA = 1:y_axis
+    a = find(track_y(1,:) >= bin_y(1,iA) & track_y(1,:) < bin_y(1,iA+1));
+    if ~isempty(a)
+        y_coo(1,a(1,:)) = iA;
+    end
+    clear a
+end
+y_coo(1,y_coo==0) = NaN;
+for iA = 1:size(x_coo,2)
+    if ~isnan(x_coo(1,iA))
+        track_location(1,iA) = locations(x_coo(1,iA),y_coo(1,iA));
+    end
+end
+clear x_coo y_coo
+
+%% consolidate
 resSeries = resSeries(:,~isnan(resSeries(2,:)));
+track_location = track_location(:,~isnan(resSeries(2,:)));
 binned_spikes(1:size(locations,1),1:size(locations,1)) = 0;
 for iA = 1:size(resSeries,2)
     binned_spikes(resSeries(5,iA)) = binned_spikes(resSeries(5,iA)) + resSeries(1,iA);
 end
 
-track_location = track_location(~isnan(track_location));
 binned_track(1:size(locations,1),1:size(locations,1)) = 0;
-for iA = 1:size(track_location,1)
-    binned_track(track_location(iA,1)) = binned_track(track_location(iA,1)) + 1;
+for iA = 1:size(track_location,2)
+    binned_track(track_location(1,iA)) = binned_track(track_location(1,iA)) + 1;
 end
 
 binned_rates = (binned_spikes./binned_track).*30;
