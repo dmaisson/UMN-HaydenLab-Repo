@@ -1,4 +1,4 @@
-function [binned_rates,binned_spikes,binned_track,locations,track_times] = rate_maps(set,tracking,bin_size,win)
+function [binned_rates,binned_spikes,binned_track,locations,track_times,binned_rates_plotting] = rate_maps(set,tracking,bin_size,win)
 
 enclosure = 300; % in cm
 
@@ -99,9 +99,10 @@ for iA = 1:size(track_location,2)
     binned_track(track_location(1,iA)) = binned_track(track_location(1,iA)) + 1;
 end
 
-binned_rates = (binned_spikes./binned_track).*30;
-binned_rates(isnan(binned_rates(:))) = 0;
-binned_rates(isinf(binned_rates(:))) = 0;
+binned_rates = (binned_spikes./binned_track).*33.3;
 binned_rates = smooth_2d_ratemap(binned_rates, 5);
+binned_rates_plotting = binned_rates;
+binned_rates_plotting(isnan(binned_rates_plotting(:))) = 0;
+binned_rates_plotting(isinf(binned_rates_plotting(:))) = 0;
 
 end

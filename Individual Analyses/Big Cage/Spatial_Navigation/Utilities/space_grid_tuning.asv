@@ -73,7 +73,7 @@ window = 1:size(set.resSeries,2);
         %% autocorrelagram
         
         autocorrelogram = spatial_autocorrelogram(binned_rates,size(binned_rates,2));
-%         autocorrelogram = imgaussfilt(autocorrelogram);
+        autocorrelogram = imgaussfilt(autocorrelogram);
         
         %% Calculate gridness score
         grid_score = gridness(autocorrelogram);
