@@ -31,8 +31,12 @@ for iB = 1:numel(OFC)
     for iA = 1:bootstrap
         disp(['bootstrapping; ', 'cell: ', num2str(iB), '; ', 'boostrap: ', num2str(iA)]);
         tic
-        shift_frames = randi([1500,4500]);
+        fwdbkwd = [-1 1];
+        x = randi(2);
+        shift_frames = randi([1500,4500])*fwdbkwd(x);
         set.resSeries = circshift(set.resSeries,shift_frames);
+        x = randi(2);
+        shift_frames = randi([1500,4500])*fwdbkwd(x);
         time_shift_control = space_grid_tuning(set,tracking,10,0);
         shifted_grid_score(iB,iA) = time_shift_control.grid_score;
         shifted_SI(iB,iA) = time_shift_control.spatial_information;
@@ -55,12 +59,11 @@ for iB = 1:numel(OFC)
 end
 
 %%
-% pick = randperm(size(grid_idx,1));
-% figure;
-% for iA = 1:4
-%     subplot (2,2,iA)
-%     pcolor(out{grid_idx(pick(iA))}.autocorrelogram); caxis([-1 1])
-%     colormap jet
-%     shading interp
-%     colorbar
-% end
+for iA = 1:size(space_grid,1)
+    grid_p(iA,1) = space_grid{iA}.grid_score_p;
+    SI_p(iA,1) = space_grid{iA}.SI_p;
+    grid_score(iA,1) = space_grid{iA}.grid_score;
+end
+
+sig_grid = find(grid_score>0);
+sig_SI = find(SI_p<0.05);

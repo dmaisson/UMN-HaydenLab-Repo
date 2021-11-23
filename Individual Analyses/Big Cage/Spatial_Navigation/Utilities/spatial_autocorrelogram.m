@@ -11,8 +11,16 @@ for iA = 1:size(x_shift,2)
         b = y(1+x_shift(iA):end,1:end-y_shift(iB));
         a = a(:);
         b = b(:);
-        upper_left(iA,iB) = corr(a,b);
-        clear x y a b 
+        c = a;
+        d = b;
+        a = a(~isnan(c)&~isnan(d));
+        b = b(~isnan(c)&~isnan(d));
+        if ~isempty(a) && ~isempty(b)
+            upper_left(iA,iB) = corr(a,b);
+        else
+            upper_left(iA,iB) = NaN;
+        end
+        clear x y a b c d
     end
 end
 upper_left = fliplr(upper_left);
@@ -26,8 +34,16 @@ for iA = 1:size(x_shift,2)
         b = y(1+x_shift(iA):end,1+y_shift(iB):end);
         a = a(:);
         b = b(:);
-        upper_right(iA,iB) = corr(a,b);
-        clear x y a b 
+        c = a;
+        d = b;
+        a = a(~isnan(c)&~isnan(d));
+        b = b(~isnan(c)&~isnan(d));
+        if ~isempty(a) && ~isempty(b)
+            upper_right(iA,iB) = corr(a,b);
+        else
+            upper_right(iA,iB) = NaN;
+        end
+        clear x y a b c d
     end
 end
 clear iA iB
@@ -40,8 +56,16 @@ for iA = 1:size(x_shift,2)
         b = y(1:end-x_shift(iA),1:end-y_shift(iB));
         a = a(:);
         b = b(:);
-        lower_left(iA,iB) = corr(a,b);
-        clear x y a b 
+        c = a;
+        d = b;
+        a = a(~isnan(c)&~isnan(d));
+        b = b(~isnan(c)&~isnan(d));
+        if ~isempty(a) && ~isempty(b)
+            lower_left(iA,iB) = corr(a,b);
+        else
+            lower_left(iA,iB) = NaN;
+        end
+        clear x y a b c d
     end
 end
 lower_left = fliplr(lower_left);
@@ -56,8 +80,16 @@ for iA = 1:size(x_shift,2)
         b = y(1:end-x_shift(iA),1+y_shift(iB):end);
         a = a(:);
         b = b(:);
-        lower_right(iA,iB) = corr(a,b);
-        clear x y a b 
+        c = a;
+        d = b;
+        a = a(~isnan(c)&~isnan(d));
+        b = b(~isnan(c)&~isnan(d));
+        if ~isempty(a) && ~isempty(b)
+            lower_right(iA,iB) = corr(a,b);
+        else
+            lower_right(iA,iB) = NaN;
+        end
+        clear x y a b c d
     end
 end
 lower_right = flipud(lower_right);
