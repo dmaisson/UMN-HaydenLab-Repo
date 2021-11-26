@@ -74,13 +74,13 @@ separated_trials.n3 = n3;
 
 clearvars -except separated_trials probs;
 
-%%
+%
 for iJ = 1:size(separated_trials.low.Ep1,1)
 safe = separated_trials.safe;
 eqlow = separated_trials.eqlow;
 eqhigh = separated_trials.eqhigh;
 
-%% create matrix of mFRs per cell, per offer constitution, per timeXepoch
+% create matrix of mFRs per cell, per offer constitution, per timeXepoch
 n = length(safe.Ep1);
 for iJ = 1:n %for each cell
     for iK = 1:size(safe.Ep1{iJ}.vars,1) %for each trial for that cell
