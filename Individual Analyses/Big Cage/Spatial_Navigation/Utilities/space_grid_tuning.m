@@ -76,7 +76,7 @@ window = 1:size(set.resSeries,2);
 %         autocorrelogram = imgaussfilt(autocorrelogram);
         
         %% Calculate gridness score
-        grid_score = gridness(autocorrelogram);
+        [grid_score,rotations] = gridness(autocorrelogram);
         
         %% collect
         out.autocorrelogram = autocorrelogram;
@@ -87,3 +87,4 @@ window = 1:size(set.resSeries,2);
         out.spatial_information = spatial_information;
 %         out.field_center = field_center;
         out.grid_score = grid_score;
+        out.rotations = rotations;
