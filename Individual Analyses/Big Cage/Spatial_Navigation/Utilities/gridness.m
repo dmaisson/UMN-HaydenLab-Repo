@@ -73,8 +73,6 @@ inner_radius = round(mean(mins));
 
 % reference the circle created at the beginner, but remove inner circle
 s = size(autocorrelogram,1);
-% x = linspace(-(s/2),(s/2),inner_radius*2);
-% y = linspace(-(s/2),(s/2),inner_radius*2);
 x = linspace(-(s/2),(s/2),s);
 y = linspace(-(s/2),(s/2),s);
 [xx yy] = meshgrid(x,y);
@@ -96,9 +94,13 @@ for iA = 1:size(rotations,2)
     rot_vect = a(:);
     init_vect = init(:);
     smaller = min([size(rot_vect(~isnan(rot_vect)),1) size(init_vect(~isnan(init_vect)),1)]);
+%     bigger = max([size(rot_vect(~isnan(rot_vect)),1) size(init_vect(~isnan(init_vect)),1)]);
     rot_vect = rot_vect(~isnan(rot_vect));
     init_vect = init_vect(~isnan(init_vect));
+%     rot_vect(end:bigger,1) = 0;
+%     init_vect(end:bigger,1) = 0;
     r(1,iA) = corr(init_vect(1:smaller),rot_vect(1:smaller));
+%     r(1,iA) = corr(init_vect,rot_vect);
     clear a init size_diff add_rows add_cols rot_vect init_vect remainder smaller
 end
 rotations(2,:) = r; clear r
