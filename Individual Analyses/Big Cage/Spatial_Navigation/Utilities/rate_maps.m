@@ -6,8 +6,8 @@ x_axis = enclosure/bin_size;
 y_axis = enclosure/bin_size;
 
 resSeries = set.resSeries(1,win);
-resSeries(2,:) = (tracking.com(win,1)*100)';
-resSeries(3,:) = (tracking.com(win,3)*100)';
+resSeries(2,:) = (tracking.com(win,3)*100)';
+resSeries(3,:) = (tracking.com(win,1)*100)';
 resSeries(4,:) = (tracking.com(win,2)*100)';
 track_times = 1:size(resSeries,2);
 track_x = resSeries(2,:)';
@@ -16,7 +16,7 @@ track_y = resSeries(3,:)';
 bin_x = linspace(min(resSeries(2,:)),max(resSeries(2,:)),x_axis);
 bin_y = linspace(min(resSeries(3,:)),max(resSeries(3,:)),y_axis);
 
-locations(1:x_axis,1:y_axis,1:z_axis) = NaN;
+locations(1:x_axis,1:y_axis) = NaN;
 for iA = 1:x_axis
     if iA == 1
         locations(:,iA) = 1:x_axis;
@@ -102,6 +102,13 @@ binned_rates_plotting = binned_rates;
 binned_rates_plotting(isnan(binned_rates_plotting(:))) = 0;
 binned_rates_plotting(isinf(binned_rates_plotting(:))) = 0;
 
+XY = nanmean(binned_rates,3);
+temp = nanmean(binned_rates,2); XZ(:,:) = temp(:,1,:); clear temp
+temp = nanmean(binned_rates,1); YZ(:,:) = temp(1,:,:); clear temp
+
+out.XY = XY;
+out.XZ = XZ;
+out.YZ = YZ;
 out.track_times = track_times;
 out.locations = locations;
 out.track_location = track_location;

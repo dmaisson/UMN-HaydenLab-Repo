@@ -1,8 +1,8 @@
 function out = space_grid_tuning(set,tracking,bin_size,CTC)
 % spatial and grid tuning
 
-window = 1:size(set.resSeries,2);
-maps = rate_maps(set,tracking,bin_size,window);
+win = 1:size(set.resSeries,2);
+maps = rate_maps(set,tracking,bin_size,win);
 
         %% Field centers
         
@@ -47,22 +47,25 @@ maps = rate_maps(set,tracking,bin_size,window);
             
             counter = 1;
             iterator = 1;
-            while counter < (size(window,2) - ten_min)
-                windows(iterator,:) = counter:(ten_min+counter)-1;
+            while counter < (size(win,2) - ten_min)
+                wins(iterator,:) = counter:(ten_min+counter)-1;
                 counter = counter+five_min;
                 iterator = iterator + 1;
             end
             clear counter iterator ten_min five_min
             
-            for iA = 1:size(windows,1)
-                maps_CTC{iA} = rate_maps(set,tracking,bin_size,windows(iA,:));
+            for iA = 1:size(wins,1)
+                maps_CTC{iA} = rate_maps(set,tracking,bin_size,wins(iA,:));
             end
             
-            for iA = 1:size(maps_CTC{iA},1)
-                for iB = 1:size(maps_CTC{iA}.binned_rates,1)
-                    first = maps_CTC{iA}.binned_rates{iB}(:);
-                    second = maps_CTC{iA}.binned_rates{iB}(:);
-                    cross_temp_corr(iA,iB) = corr(first,second);
+            for iA = 1:size(maps_CTC,2)
+                for iB = 1:size(maps_CTC,2)
+                    first = maps_CTC{iA}.binned_rates(~isnan(maps_CTC{iA}.binned_rates));
+                    first = first(:);
+                    second = maps_CTC{iB}.binned_rates(~isnan(maps_CTC{iB}.binned_rates));
+                    second = second(:);
+                    smaller = min([size(first,1) size(second,1)]);
+                    cross_temp_corr(iA,iB) = corr(first(1:smaller),second(1:smaller));
                     clear first second
                 end
             end
@@ -71,7 +74,6 @@ maps = rate_maps(set,tracking,bin_size,window);
         end
         % 2 sec run-time
         %% autocorrelagram
-        
         autocorrelogram = spatial_autocorrelogram(maps.binned_rates,size(maps.binned_rates,2));
         
         %% Calculate gridness score
@@ -79,10 +81,7 @@ maps = rate_maps(set,tracking,bin_size,window);
         
         %% collect
         out.autocorrelogram = autocorrelogram;
-        out.binned_rates = binned_rates;
-        out.binned_track = binned_track;
-        out.binned_spikes = binned_spikes;
-        out.binned_rates_plotting = binned_rates_plotting;
+        out.maps = maps;
         out.spatial_information = spatial_information;
 %         out.field_center = field_center;
         out.grid_score = grid_score;

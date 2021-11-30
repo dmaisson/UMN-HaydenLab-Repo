@@ -7,8 +7,8 @@ y_axis = enclosure/bin_size;
 z_axis = enclosure/bin_size;
 
 resSeries = set.resSeries(1,win);
-resSeries(2,:) = (tracking.com(win,1)*100)';
-resSeries(3,:) = (tracking.com(win,3)*100)';
+resSeries(2,:) = (tracking.com(win,3)*100)';
+resSeries(3,:) = (tracking.com(win,1)*100)';
 resSeries(4,:) = (tracking.com(win,2)*100)';
 track_times = 1:size(resSeries,2);
 track_x = resSeries(2,:)';
@@ -118,11 +118,21 @@ for iA = 1:numel(binned_spikes)
     binned_rates(iA) = (binned_spikes(iA)/binned_track(iA))*33.3;
 end
 
-binned_rates = imgaussfilt(binned_rates, 5);
+% binned_rates = imgaussfilt(binned_rates, 5);
 binned_rates_plotting = binned_rates;
 binned_rates_plotting(isnan(binned_rates_plotting(:))) = 0;
 binned_rates_plotting(isinf(binned_rates_plotting(:))) = 0;
 
+%% spatial information
+for iA = 1:numel(locations)
+    p_i = binned_track(iA)/size(track_times,2);
+    lam_i = binned_rates(iA);
+    lam = nanmean(binned_rates(:));
+    info_i(iA) = (p_i*(lam_i/lam))*log2(lam_i/lam);
+end
+spatial_information = nansum(info_i);
+
+%% save
 out.track_times = track_times;
 out.locations = locations;
 out.track_location = track_location;
@@ -131,5 +141,6 @@ out.binned_rates = binned_rates;
 out.binned_spikes = binned_spikes;
 out.binned_track = binned_track;
 out.binned_rates_plotting = binned_rates_plotting;
+out.spatial_information = spatial_information;
 
 end
